@@ -4,8 +4,8 @@
  * @license      {@link https://opensource.org/licenses/MIT|MIT License}
  */
 
-var Class = require('../../utils/Class');
-var Frame = require('../../textures/Frame');
+var Class = require("../../utils/Class");
+var Frame = require("../../textures/Frame");
 
 /**
  * @classdesc
@@ -35,11 +35,7 @@ var Frame = require('../../textures/Frame');
  * @param {boolean} visible - Should the Bob render visible or not to start with?
  */
 var Bob = new Class({
-
-    initialize:
-
-    function Bob (blitter, x, y, frame, visible)
-    {
+    initialize: function Bob(blitter, x, y, frame, visible) {
         /**
          * The Blitter object that this Bob belongs to.
          *
@@ -140,6 +136,31 @@ var Bob = new Class({
          * @since 3.0.0
          */
         this.flipY = false;
+        /**
+         * The vertically flipped state of the Bob.
+         * A Bob that is flipped vertically will render inversed on the vertical axis (i.e. upside down)
+         * Flipping always takes place from the middle of the texture.
+         *
+         * @name Phaser.GameObjects.Bob#depth
+         * @type {boolean}
+         * @since 3.0.0
+         */
+        this.depth = 1;
+    },
+
+    /**
+     * add by shayxu
+     *
+     * @method Phaser.GameObjects.Bob#setDepth
+     * @since 3.0.0
+     *
+     * @param {number} [depth] - add by
+     *
+     * @return {this} This Bob Game Object.
+     */
+    setDepth: function (depth) {
+        this.depth = depth;
+        return this;
     },
 
     /**
@@ -154,18 +175,15 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setFrame: function (frame)
-    {
-        if (frame === undefined)
-        {
+    setFrame: function (frame) {
+        if (frame === undefined) {
             this.frame = this.parent.frame;
-        }
-        else if (frame instanceof Frame && frame.texture === this.parent.texture)
-        {
+        } else if (
+            frame instanceof Frame &&
+            frame.texture === this.parent.texture
+        ) {
             this.frame = frame;
-        }
-        else
-        {
+        } else {
             this.frame = this.parent.texture.get(frame);
         }
 
@@ -180,8 +198,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    resetFlip: function ()
-    {
+    resetFlip: function () {
         this.flipX = false;
         this.flipY = false;
 
@@ -204,8 +221,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    reset: function (x, y, frame)
-    {
+    reset: function (x, y, frame) {
         this.x = x;
         this.y = y;
 
@@ -217,8 +233,7 @@ var Bob = new Class({
 
         this.parent.dirty = true;
 
-        if (frame)
-        {
+        if (frame) {
             this.setFrame(frame);
         }
 
@@ -236,8 +251,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setPosition: function (x, y)
-    {
+    setPosition: function (x, y) {
         this.x = x;
         this.y = y;
 
@@ -254,8 +268,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setFlipX: function (value)
-    {
+    setFlipX: function (value) {
         this.flipX = value;
 
         return this;
@@ -271,8 +284,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setFlipY: function (value)
-    {
+    setFlipY: function (value) {
         this.flipY = value;
 
         return this;
@@ -289,8 +301,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setFlip: function (x, y)
-    {
+    setFlip: function (x, y) {
         this.flipX = x;
         this.flipY = y;
 
@@ -309,8 +320,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setVisible: function (value)
-    {
+    setVisible: function (value) {
         this.visible = value;
 
         return this;
@@ -329,8 +339,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setAlpha: function (value)
-    {
+    setAlpha: function (value) {
         this.alpha = value;
 
         return this;
@@ -346,8 +355,7 @@ var Bob = new Class({
      *
      * @return {this} This Bob Game Object.
      */
-    setTint: function (value)
-    {
+    setTint: function (value) {
         this.tint = value;
 
         return this;
@@ -360,8 +368,7 @@ var Bob = new Class({
      * @method Phaser.GameObjects.Bob#destroy
      * @since 3.0.0
      */
-    destroy: function ()
-    {
+    destroy: function () {
         this.parent.dirty = true;
 
         this.parent.children.remove(this);
@@ -381,18 +388,14 @@ var Bob = new Class({
      * @since 3.0.0
      */
     visible: {
-
-        get: function ()
-        {
+        get: function () {
             return this._visible;
         },
 
-        set: function (value)
-        {
-            this.parent.dirty |= (this._visible !== value);
+        set: function (value) {
+            this.parent.dirty |= this._visible !== value;
             this._visible = value;
-        }
-
+        },
     },
 
     /**
@@ -405,20 +408,15 @@ var Bob = new Class({
      * @since 3.0.0
      */
     alpha: {
-
-        get: function ()
-        {
+        get: function () {
             return this._alpha;
         },
 
-        set: function (value)
-        {
-            this.parent.dirty |= ((this._alpha > 0) !== (value > 0));
+        set: function (value) {
+            this.parent.dirty |= this._alpha > 0 !== value > 0;
             this._alpha = value;
-        }
-
-    }
-
+        },
+    },
 });
 
 module.exports = Bob;
